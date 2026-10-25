@@ -1,56 +1,87 @@
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        // Задание 1. Имя и возраст
-        String name = sc.nextLine();
-        int age = sc.nextInt();
-        sc.nextLine();
+        // Задание 1. Чётное или нечётное число
+        System.out.println("=== ЗАДАНИЕ 1 ===");
 
-        System.out.println("Привет, " + name + "!");
-        System.out.println("Тебе " + age + " лет.");
-        System.out.println("Через 5 лет тебе будет " + (age + 5) + " лет.");
+        while (true) {
+            System.out.print("Введите число (0 для выхода): ");
+            int n = scanner.nextInt();
 
-        // Задание 2. Чек в магазине
-        String product = sc.nextLine();
-        int price = sc.nextInt();
-        int count = sc.nextInt();
-        sc.nextLine();
+            if (n == 0) {
+                break;
+            }
 
-        int total = price * count;
+            if (n % 2 == 0) {
+                System.out.println("Число чётное");
+            } else {
+                System.out.println("Число нечётное");
+            }
+        }
 
-        System.out.println("Товар: " + product);
-        System.out.println(count + " шт. по " + price + " руб.");
-        System.out.println("Итого: " + total + " руб.");
+        // Задание 2. Проверка пароля без массивов
+        System.out.println("\n=== ЗАДАНИЕ 2 ===");
+        scanner.nextLine();
 
-        // Задание 3. Секундомер
-        String timerName = sc.nextLine();
-        int seconds = sc.nextInt();
-        sc.nextLine();
+        System.out.print("Введите пароль: ");
+        String password = scanner.nextLine();
 
-        int hours = seconds / 3600;
-        int minutes = seconds % 3600 / 60;
-        int sec = seconds % 60;
+        boolean hasDigit = false;
+        boolean hasUpper = false;
+        int vowels = 0;
 
-        System.out.println(timerName + ", " + seconds + " сек = "
-                + hours + " ч " + minutes + " мин " + sec + " сек");
+        for (int i = 0; i < password.length(); i++) {
+            char c = password.charAt(i);
 
-        // Задание 4. Визитка
-        int personAge = sc.nextInt();
-        sc.nextLine();
+            if (Character.isDigit(c)) {
+                hasDigit = true;
+            }
 
-        String fio = sc.nextLine();
-        String city = sc.nextLine();
+            if (Character.isUpperCase(c)) {
+                hasUpper = true;
+            }
 
-        System.out.println("=== ВИЗИТКА ===");
-        System.out.println("Имя: " + fio);
-        System.out.println("Возраст: " + personAge);
-        System.out.println("Город: " + city);
-        System.out.println("Через 10 лет: " + (personAge + 10));
+            char lower = Character.toLowerCase(c);
+            if ("аеёиоуыэюя".indexOf(lower) != -1) {
+                vowels++;
+            }
+        }
 
-        sc.close();
+        System.out.println("Есть цифра: " + hasDigit);
+        System.out.println("Есть заглавная буква: " + hasUpper);
+        System.out.println("Количество гласных: " + vowels);
+
+        if (hasDigit && hasUpper) {
+            System.out.println("Пароль надёжный");
+        } else {
+            System.out.println("Слабый");
+        }
+
+        // Задание 3. Длина окружности и площадь круга
+        System.out.println("\n=== ЗАДАНИЕ 3 ===");
+
+        System.out.print("Введите радиус круга: ");
+        double radius = scanner.nextDouble();
+
+        double length = 2 * Math.PI * radius;
+        double area = Math.PI * radius * radius;
+
+        System.out.println("Длина окружности: " + length);
+        System.out.println("Площадь круга: " + area);
+
+        // Задание 4. Перевод Цельсия в Фаренгейты
+        System.out.println("\n=== ЗАДАНИЕ 4 ===");
+
+        System.out.print("Введите температуру в Цельсиях: ");
+        double celsius = scanner.nextDouble();
+
+        double fahrenheit = celsius * 9 / 5 + 32;
+
+        System.out.println("Температура в Фаренгейтах: " + fahrenheit);
+
+        scanner.close();
     }
 }
