@@ -1,87 +1,123 @@
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("=== Задание 1 ===");
+        task1();
+        System.out.println("\n=== Задание 2 ===");
+        task2();
+        System.out.println("\n=== Задание 3 ===");
+        task3();
+        System.out.println("\n=== Задание 4 ===");
+        task4();
+        System.out.println("\n=== Задание 5 ===");
+        task5();
+    }
 
-        // Задание 1. Чётное или нечётное число
-        System.out.println("=== ЗАДАНИЕ 1 ===");
+    // Ввод массива: сначала n, потом n чисел
+    static int[] readArray() {
+        System.out.print("Введите n: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Число " + (i + 1) + ": ");
+            arr[i] = sc.nextInt();
+        }
+        return arr;
+    }
 
+    // 1. Максимум и индекс первого вхождения
+    static void task1() {
+        int[] arr = readArray();
+        int max = arr[0];
+        int maxIndex = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) { // строго больше, чтобы остался ПЕРВЫЙ индекс
+                max = arr[i];
+                maxIndex = i;
+            }
+        }
+        System.out.println("Максимум: " + max + ", индекс: " + maxIndex);
+    }
+
+    // 2. Разворот массива на месте
+    static void task2() {
+        int[] arr = readArray();
+        int n = arr.length;
+        for (int i = 0; i < n / 2; i++) {
+            int temp = arr[i];
+            arr[i] = arr[n - 1 - i];
+            arr[n - 1 - i] = temp;
+        }
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+    }
+
+    // 3. Слова до stop
+    static void task3() {
+        sc.nextLine();
+        ArrayList<String> words = new ArrayList<>();
+        System.out.println("Вводите слова по одному (stop — конец):");
         while (true) {
-            System.out.print("Введите число (0 для выхода): ");
-            int n = scanner.nextInt();
-
-            if (n == 0) {
+            String word = sc.nextLine();
+            if (word.equals("stop")) {
                 break;
             }
-
-            if (n % 2 == 0) {
-                System.out.println("Число чётное");
-            } else {
-                System.out.println("Число нечётное");
+            words.add(word);
+        }
+        System.out.println("Всего: " + words.size());
+        for (String w : words) {
+            if (w.length() > 4) {
+                System.out.println(w);
             }
         }
+    }
 
-        // Задание 2. Проверка пароля без массивов
-        System.out.println("\n=== ЗАДАНИЕ 2 ===");
-        scanner.nextLine();
-
-        System.out.print("Введите пароль: ");
-        String password = scanner.nextLine();
-
-        boolean hasDigit = false;
-        boolean hasUpper = false;
-        int vowels = 0;
-
-        for (int i = 0; i < password.length(); i++) {
-            char c = password.charAt(i);
-
-            if (Character.isDigit(c)) {
-                hasDigit = true;
+    // 4. Прямоугольник из символов
+    static void printRectangle(int width, int height, char symbol) {
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                System.out.print(symbol);
             }
+            System.out.println();
+        }
+    }
 
-            if (Character.isUpperCase(c)) {
-                hasUpper = true;
-            }
+    static void task4() {
+        System.out.print("Ширина: ");
+        int width = sc.nextInt();
+        System.out.print("Высота: ");
+        int height = sc.nextInt();
+        System.out.print("Символ: ");
+        char symbol = sc.next().charAt(0);
+        printRectangle(width, height, symbol);
+    }
 
-            char lower = Character.toLowerCase(c);
-            if ("аеёиоуыэюя".indexOf(lower) != -1) {
-                vowels++;
+    // 5. Среднее и элементы больше среднего
+    static double average(int[] arr) {
+        int sum = 0;
+        for (int x : arr) {
+            sum += x;
+        }
+        return (double) sum / arr.length;
+    }
+
+    static void task5() {
+        int[] arr = readArray();
+        double avg = average(arr);
+        System.out.println(String.format(Locale.US, "Среднее: %.1f", avg));
+        System.out.print("Больше среднего:");
+        for (int x : arr) {
+            if (x > avg) {
+                System.out.print(" " + x);
             }
         }
-
-        System.out.println("Есть цифра: " + hasDigit);
-        System.out.println("Есть заглавная буква: " + hasUpper);
-        System.out.println("Количество гласных: " + vowels);
-
-        if (hasDigit && hasUpper) {
-            System.out.println("Пароль надёжный");
-        } else {
-            System.out.println("Слабый");
-        }
-
-        // Задание 3. Длина окружности и площадь круга
-        System.out.println("\n=== ЗАДАНИЕ 3 ===");
-
-        System.out.print("Введите радиус круга: ");
-        double radius = scanner.nextDouble();
-
-        double length = 2 * Math.PI * radius;
-        double area = Math.PI * radius * radius;
-
-        System.out.println("Длина окружности: " + length);
-        System.out.println("Площадь круга: " + area);
-
-        // Задание 4. Перевод Цельсия в Фаренгейты
-        System.out.println("\n=== ЗАДАНИЕ 4 ===");
-
-        System.out.print("Введите температуру в Цельсиях: ");
-        double celsius = scanner.nextDouble();
-
-        double fahrenheit = celsius * 9 / 5 + 32;
-
-        System.out.println("Температура в Фаренгейтах: " + fahrenheit);
-
-        scanner.close();
+        System.out.println();
     }
 }
